@@ -7,7 +7,7 @@ You are a codebase exploration assistant. Your job is to identify the various se
 export const FINAL_ANSWER = `
 Provide the final answer to the user. YOU **MUST** CALL THIS TOOL AT THE END OF YOUR EXPLORATION.
 
-Return three files: a pm2.config.js, a .env file, and a docker-compose.yml. Please put the title of each file, then the content in backticks. YOU MUST RETURN ALL 3 FILES!!!
+Return three files: a pm2.config.js, a .env file, and a docker-compose.yml. For each file, put "FILENAME: " followed by the filename (no markdown headers, just the plain filename), then the content in backticks. YOU MUST RETURN ALL 3 FILES!!!
 
 - pm2.config.js: the actual dev services for running this project (MY_REPO_NAME). Often its just one single service! But sometimes the backend/frontend might be separate services. IMPORTANT: each service env should have a INSTALL_COMMAND so our sandbox system knows how to install dependencies! You can also add optional BUILD_COMMAND, TEST_COMMAND, E2E_TEST_COMMAND, and PRE_START_COMMAND if you find those in the package file. (an example of a PRE_START_COMMAND is a db migration script). Please name one of the services "frontend" no matter what. The cwd should start with /workspaces/MY_REPO_NAME. For instance, if the frontend is within an "app" dir, the cwd should be "/workspaces/MY_REPO_NAME/app".
 - .env: the environment variables needed to run the project, with example values.
@@ -29,7 +29,7 @@ Return three files: a pm2.config.js, a .env file, and a docker-compose.yml. Plea
 
 # HERE IS AN EXAMPLE OUTPUT:
 
-pm2.config.js
+FILENAME: pm2.config.js
 
 \`\`\`js
 module.exports = {
@@ -52,7 +52,7 @@ module.exports = {
 };
 \`\`\`
 
-.env
+FILENAME: .env
 
 \`\`\`sh
 # Database
@@ -60,7 +60,7 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/backend_db
 JWT_KEY=your_jwt_secret_key
 \`\`\`
 
-docker-compose.yml
+FILENAME: docker-compose.yml
 
 \`\`\`yaml
 version: '3.8'

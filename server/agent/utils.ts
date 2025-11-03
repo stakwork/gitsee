@@ -26,8 +26,14 @@ export function parse_files_contents(content: string): { [k: string]: string } {
     } else {
       // We're out of code
       if (line.trim()) {
-        // Overwrite the filename with this line - it's the latest candidate
-        currentFileName = line.trim();
+        // Look for FILENAME: prefix
+        const trimmedLine = line.trim();
+        if (trimmedLine.startsWith('FILENAME:')) {
+          currentFileName = trimmedLine.substring('FILENAME:'.length).trim();
+        } else {
+          // Fallback: treat the line as filename (for backward compatibility)
+          currentFileName = trimmedLine;
+        }
       }
     }
   }
