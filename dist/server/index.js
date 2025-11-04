@@ -1422,7 +1422,7 @@ You are a codebase exploration assistant. Your job is to identify the various se
 var FINAL_ANSWER3 = `
 Provide the final answer to the user. YOU **MUST** CALL THIS TOOL AT THE END OF YOUR EXPLORATION.
 
-Return three files: a pm2.config.js, a .env file, and a docker-compose.yml. Please put the title of each file, then the content in backticks. YOU MUST RETURN ALL 3 FILES!!!
+Return three files: a pm2.config.js, a .env file, and a docker-compose.yml. For each file, put "FILENAME: " followed by the filename (no markdown headers, just the plain filename), then the content in backticks. YOU MUST RETURN ALL 3 FILES!!!
 
 - pm2.config.js: the actual dev services for running this project (MY_REPO_NAME). Often its just one single service! But sometimes the backend/frontend might be separate services. IMPORTANT: each service env should have a INSTALL_COMMAND so our sandbox system knows how to install dependencies! You can also add optional BUILD_COMMAND, TEST_COMMAND, E2E_TEST_COMMAND, and PRE_START_COMMAND if you find those in the package file. (an example of a PRE_START_COMMAND is a db migration script). Please name one of the services "frontend" no matter what. The cwd should start with /workspaces/MY_REPO_NAME. For instance, if the frontend is within an "app" dir, the cwd should be "/workspaces/MY_REPO_NAME/app".
 - .env: the environment variables needed to run the project, with example values.
@@ -1444,7 +1444,7 @@ Return three files: a pm2.config.js, a .env file, and a docker-compose.yml. Plea
 
 # HERE IS AN EXAMPLE OUTPUT:
 
-pm2.config.js
+FILENAME: pm2.config.js
 
 \`\`\`js
 module.exports = {
@@ -1467,7 +1467,7 @@ module.exports = {
 };
 \`\`\`
 
-.env
+FILENAME: .env
 
 \`\`\`sh
 # Database
@@ -1475,7 +1475,7 @@ DATABASE_URL=postgresql://postgres:password@localhost:5432/backend_db
 JWT_KEY=your_jwt_secret_key
 \`\`\`
 
-docker-compose.yml
+FILENAME: docker-compose.yml
 
 \`\`\`yaml
 version: '3.8'
@@ -2474,13 +2474,21 @@ var GitSeeHandler = class {
       const cachedData = await this.store.getBasicData(owner, repo);
       if (cachedData) {
         console.log(`\u{1F4BE} Using cached data for ${owner}/${repo}`);
-        const cachedExploration = await this.store.getExploration(owner, repo, "first_pass");
+        const cachedExploration = await this.store.getExploration(
+          owner,
+          repo,
+          "first_pass"
+        );
         if (cachedExploration?.result) {
-          console.log(`\u{1F4E1} Scheduling cached exploration SSE emission for ${owner}/${repo}`);
+          console.log(
+            `\u{1F4E1} Scheduling cached exploration SSE emission for ${owner}/${repo}`
+          );
           setImmediate(async () => {
             try {
               await this.emitter.waitForConnection(owner, repo, 5e3);
-              console.log(`\u{1F4E1} Emitting cached exploration via SSE for ${owner}/${repo}`);
+              console.log(
+                `\u{1F4E1} Emitting cached exploration via SSE for ${owner}/${repo}`
+              );
               this.emitter.emitExplorationCompleted(
                 owner,
                 repo,
@@ -2488,7 +2496,9 @@ var GitSeeHandler = class {
                 cachedExploration.result
               );
             } catch (error) {
-              console.warn(`\u23F0 Timeout waiting for SSE, emitting anyway for ${owner}/${repo}`);
+              console.warn(
+                `\u23F0 Timeout waiting for SSE, emitting anyway for ${owner}/${repo}`
+              );
               this.emitter.emitExplorationCompleted(
                 owner,
                 repo,
@@ -2507,10 +2517,14 @@ var GitSeeHandler = class {
           exploration: cachedExploration?.result
         };
       } else {
-        console.log(`\u{1F4BE} No cached data found for ${owner}/${repo}, fetching fresh...`);
+        console.log(
+          `\u{1F4BE} No cached data found for ${owner}/${repo}, fetching fresh...`
+        );
       }
     } else {
-      console.log(`\u{1F504} useCache=false, skipping cache and fetching fresh data for ${owner}/${repo}`);
+      console.log(
+        `\u{1F504} useCache=false, skipping cache and fetching fresh data for ${owner}/${repo}`
+      );
     }
     const contributors = cloneOptions?.token ? new ContributorsResource(this.cache, cloneOptions.token) : this.contributors;
     const icons = cloneOptions?.token ? new IconsResource(this.cache, cloneOptions.token) : this.icons;

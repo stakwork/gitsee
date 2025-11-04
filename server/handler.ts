@@ -381,9 +381,7 @@ export class GitSeeHandler {
     });
   }
 
-  private async processRequest(
-    request: GitSeeRequest
-  ): Promise<GitSeeResponse> {
+  async processRequest(request: GitSeeRequest): Promise<GitSeeResponse> {
     const { owner, repo, data, cloneOptions, useCache } = request;
     const response: GitSeeResponse = {};
 
@@ -394,16 +392,24 @@ export class GitSeeHandler {
         console.log(`💾 Using cached data for ${owner}/${repo}`);
 
         // Check if we also have cached exploration
-        const cachedExploration = await this.store.getExploration(owner, repo, "first_pass");
+        const cachedExploration = await this.store.getExploration(
+          owner,
+          repo,
+          "first_pass"
+        );
 
         // Emit SSE event for cached exploration so frontend knows to render concept nodes
         if (cachedExploration?.result) {
-          console.log(`📡 Scheduling cached exploration SSE emission for ${owner}/${repo}`);
+          console.log(
+            `📡 Scheduling cached exploration SSE emission for ${owner}/${repo}`
+          );
           // Emit after a delay to allow SSE connection to establish
           setImmediate(async () => {
             try {
               await this.emitter.waitForConnection(owner, repo, 5000);
-              console.log(`📡 Emitting cached exploration via SSE for ${owner}/${repo}`);
+              console.log(
+                `📡 Emitting cached exploration via SSE for ${owner}/${repo}`
+              );
               this.emitter.emitExplorationCompleted(
                 owner,
                 repo,
@@ -411,7 +417,9 @@ export class GitSeeHandler {
                 cachedExploration.result
               );
             } catch (error) {
-              console.warn(`⏰ Timeout waiting for SSE, emitting anyway for ${owner}/${repo}`);
+              console.warn(
+                `⏰ Timeout waiting for SSE, emitting anyway for ${owner}/${repo}`
+              );
               this.emitter.emitExplorationCompleted(
                 owner,
                 repo,
@@ -432,10 +440,14 @@ export class GitSeeHandler {
           exploration: cachedExploration?.result,
         };
       } else {
-        console.log(`💾 No cached data found for ${owner}/${repo}, fetching fresh...`);
+        console.log(
+          `💾 No cached data found for ${owner}/${repo}, fetching fresh...`
+        );
       }
     } else {
-      console.log(`🔄 useCache=false, skipping cache and fetching fresh data for ${owner}/${repo}`);
+      console.log(
+        `🔄 useCache=false, skipping cache and fetching fresh data for ${owner}/${repo}`
+      );
     }
 
     // Create per-request resource instances if token provided

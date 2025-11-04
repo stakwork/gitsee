@@ -1,6 +1,6 @@
 {
   "name": "gitsee",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Git repository visualizer using D3.js graph visualization",
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",

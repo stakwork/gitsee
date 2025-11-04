@@ -156,7 +156,7 @@ declare class GitSeeHandler {
     private autoStartFirstPassExploration;
     private runBackgroundExploration;
     private parseRequestBody;
-    private processRequest;
+    processRequest(request: GitSeeRequest): Promise<GitSeeResponse>;
 }
 declare function createGitSeeHandler(options?: GitSeeOptions): (req: IncomingMessage, res: ServerResponse) => Promise<void>;
 
