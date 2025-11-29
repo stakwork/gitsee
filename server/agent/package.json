@@ -1,6 +1,6 @@
 {
   "name": "gitsee-agent",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "description": "AI agent for analyzing git repositories",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -25,9 +25,9 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@ai-sdk/anthropic": "^2.0.15",
-    "ai": "^5.0.42",
-    "aieo": "^0.1.24",
+    "@ai-sdk/anthropic": "3.0.0-beta.66",
+    "ai": "6.0.0-beta.124",
+    "aieo": "0.1.27",
     "dotenv": "^17.2.2",
     "isomorphic-git": "^1.25.0",
     "zod": "^4.1.8"
