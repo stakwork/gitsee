@@ -1,6 +1,6 @@
 {
   "name": "gitsee",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Git repository visualizer using D3.js graph visualization",
   "main": "dist/client/index.js",
   "types": "dist/client/index.d.ts",
@@ -42,7 +42,7 @@
     "@ai-sdk/anthropic": "3.0.0-beta.66",
     "@octokit/rest": "^20.0.0",
     "ai": "6.0.0-beta.124",
-    "aieo": "0.1.28",
+    "aieo": "0.1.29",
     "d3": "^7.8.5",
     "d3-force": "^3.0.0",
     "d3-selection": "^3.0.0",
